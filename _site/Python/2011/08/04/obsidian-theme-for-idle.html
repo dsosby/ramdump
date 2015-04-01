@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+		<meta content="en-au" http-equiv="Content-Language" />
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Blog Feed" />
+		<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Blog Feed" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<title>Obsidian Theme for IDLE</title>
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/8.4/styles/default.min.css">
+		<link rel="shortcut icon" href="/img/favicon.ico" />
+	</head>
+
+	<body>
+		<div id="container">
+			<div id="side">
+				<a href="/" id="home" title="home" alt="home"><img src="/img/logo.png" alt="Site Name" /></a>
+				<div id="hometext"><a href="/" >Site Name</a></div>
+				<div class="section">
+					<ul>
+						<li><a href="/about.html">about</a></li>
+						<li><a href="/rss.xml"><img src="/img/25.png" /> feed</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="content">
+				<div class="entry-container">
+	<div class='entry'>
+		<h1> Obsidian Theme for IDLE </h1>
+		<span class="postdate"> 4 August, 2011
+			
+		</span>
+		<p>I attempt to use dark backgrounds in all of my editors. I find it much <a href="http://www.thebestpageintheuniverse.net/c.cgi?u=faq">easier on my eyes</a> when I'm staring at code all day long or hacking on something early in the morning. I generally use something close to my favorite color scheme on Notepad++, Obsidian, which I  believe is based on Obsidian Coast in KDE.</p>
+<p>With that said, Python's IDLE application is harshly bright compared to my normal editors. After a quick Google search I found only a few themes available for IDLE, so I created IDLE highlighting settings that mimic my favorite color scheme. Here is the first draft for all to enjoy. You can also find the latest updates in <a href="https://gist.github.com/1122904">this</a> Gist repo. Installation is easy: just copy and paste these settings into your .idlerc\config-highlight.cfg file in your home directory (creating as necessary), then choose it in your Highlighting settings in IDLE by selecting &quot;Use Custom Theme&quot; and &quot;Obsidian&quot; from the dropdown.</p>
+<p><a href="http://ramdump.files.wordpress.com/2011/08/idle_obsidian.png"><img src="/img/idle_obsidian.png" alt="Screenshot of Obsidian for IDLE" title="IDLE Obsidian"></a></p>
+<h3>The Code</h3>
+<pre><code>definition-foreground = #678CB1
+error-foreground = #FF0000
+string-background = #293134
+keyword-foreground = #93C763
+normal-foreground = #E0E2E4
+comment-background = #293134
+hit-foreground = #E0E2E4
+builtin-background = #293134
+stdout-foreground = #678CB1
+cursor-foreground = #E0E2E4
+break-background = #293134
+comment-foreground = #66747B
+hilite-background = #2F393C
+hilite-foreground = #E0E2E4
+definition-background = #293134
+stderr-background = #293134
+hit-background = #000000
+console-foreground = #E0E2E4
+normal-background = #293134
+builtin-foreground = #E0E2E4
+stdout-background = #293134
+console-background = #293134
+stderr-foreground = #FB0000
+keyword-background = #293134
+string-foreground = #EC7600
+break-foreground = #E0E2E4
+error-background = #293134
+</code></pre>
+	</div>
+</div>
+<div id="page-navigation"> 
+	<div class="left">  </div> 
+	<div class="right">  </div> 
+	<div class="clear">&nbsp;</div>
+</div> 
+
+
+
+			</div>
+		</div>
+		<script src="//cdn.jsdelivr.net/highlight.js/8.4/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+	</body>
+</html>
