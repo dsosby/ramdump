@@ -21,9 +21,9 @@ This installs everything for you with no issue, however it's an older version (a
 <h3>CouchDB Egg</h3>
 Chicken Scheme has an extension system which packages and distributes "<a href="http://wiki.call-cc.org/eggs" target="_blank">eggs</a>." An egg consists of Scheme sources plus some meta information such as build scripts and egg dependencies. You can install an egg using the chicken-install utility that comes with Chicken.
 
-[code language="Bash"]
+```
 chicken-install -sudo couchdb
-[/code]
+```
 
 This will download the <a href="http://wiki.call-cc.org/eggref/4/couchdb" target="_blank">couchdb egg</a> along with all eggs in the dependency tree. The utility then begins compiling and installing all eggs along the way. If you don't do a lot of development, chances are likely that you will run into system dependencies that are unmet. Chicken Scheme compiles to C, and as such many eggs have dependencies on C libraries.
 
@@ -36,9 +36,9 @@ For example, my first attempt at installing the couchdb egg failed due to missin
 
 A few searches for openssl and I satisfied the dependency with the following command:
 
-[code language="Bash"]
+```
 sudo apt-get install libssl-dev
-[/code]
+```
 
 With that successfully in place, another call to install the couchdb egg succeeded.
 
@@ -51,33 +51,33 @@ That failed miserably.
 
 No matter what I tried, the command <code>(get-server-info couch)</code> would fail with a connection refused. <code>(connection-uri couch)</code> showed that the URI struct was still pointing at localhost. Luckily, the <a href="http://code.call-cc.org/svn/chicken-eggs/release/4/" target="_blank">source for Chicken eggs</a> are available, even for CouchDB. The make-connection function is created by the <code>(defstruct connection ...)</code> expression. I noticed that the server attribute of connection struct is a <code>uri-reference</code>, <em>not</em> a string. Reading through the defstruct docs I figured out the following worked - woot.
 
-[code]
+```
 (import uri-common)
-(define cloudant-url server: (uri-reference &quot;https://username:password@username.cloudant.com&quot;))
-(define cloudant (make-connection server: cloudant-url database: &quot;crud&quot;))
+(define cloudant-url server: (uri-reference "https://username:password@username.cloudant.com"))
+(define cloudant (make-connection server: cloudant-url database: "crud"))
 (get-server-info cloudant)
-[/code]
+```
 
 This returns JSON data in Scheme structure:
 
-[code]
-#((&quot;couchdb&quot; . &quot;Welcome&quot;)
-  (&quot;version&quot; . &quot;1.0.2&quot;)
-  (&quot;cloudant_build&quot; . &quot;768&quot;))
-[/code]
+```
+#(("couchdb" . "Welcome")
+  ("version" . "1.0.2")
+  ("cloudant_build" . "768"))
+```
 
 Since I'm new to Scheme, getting the data out was a bit odd, and I'm sure completely inefficient.
 
-[code]
-(define server-info (vector-&gt;list (get-server-info cloudant)))
-(alist-ref &quot;version&quot; server-info equal?)
-[/code]
+```
+(define server-info (vector->list (get-server-info cloudant)))
+(alist-ref "version" server-info equal?)
+```
 
-That about sums it up. Hopefully I figure more stuff out and post some updates. Feel free to comment if I'm reading the JSON structure in a completely asinine way. The vector-&gt;list doesn't seem right.
+That about sums it up. Hopefully I figure more stuff out and post some updates. Feel free to comment if I'm reading the JSON structure in a completely asinine way. The vector->list doesn't seem right.
 
 <h1>Update</h1>
 The couchdb egg documentation has been updated to cover most of this. I've also noticed a generally handy function that is exported by the couchdb module, json-ref, that makes it simple to grab top-level JSON items like "version" above.
 
-[code]
+```
 (define server-version (json-ref 'version (get-server-info cloudant)))
-[/code]
+```

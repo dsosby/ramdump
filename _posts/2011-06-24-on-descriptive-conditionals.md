@@ -11,7 +11,7 @@ tags:
 ---
 
 [sourcecode language="java"]
-if ( ((x &gt; y) || (y == z)) &amp;&amp; isSomethingTrue() )  {
+if ( ((x > y) || (y == z)) && isSomethingTrue() )  {
     //Do Something
 }
 [/sourcecode]
@@ -19,11 +19,11 @@ if ( ((x &gt; y) || (y == z)) &amp;&amp; isSomethingTrue() )  {
 OK, what just happened there? This type of conditional can be painful to read and debug. Is there a better way?
 
 [sourcecode language="java"]
-boolean isXBigEnough = x &gt; y;
+boolean isXBigEnough = x > y;
 boolean isYValid     = y == z;
 boolean isInCorrectState = isXBigEnough || isYValid;
 
-if ( isInCorrectState &amp;&amp; isSomethingTrue() )  {
+if ( isInCorrectState && isSomethingTrue() )  {
     //Do Something
 }
 [/sourcecode]
@@ -34,7 +34,7 @@ I've taken the following Java code and examined the bytecode produced to get a b
 
 [sourcecode language="java"]
 private boolean methodOne(int a, int b, int c, int d)  {
-    if ( a &lt; b &amp;&amp; b &lt; c &amp;&amp; c &lt; d )  {
+    if ( a < b && b < c && c < d )  {
         return true;
     } else {
         return false;
@@ -67,11 +67,11 @@ Now let's compare to the documented version:
 
 [sourcecode language="java"]
 private boolean methodTwo(int a, int b, int c, int d)  {
-    boolean first  = a&lt;b;
-    boolean second = b&lt;c;
-    boolean third  = c&lt;d;
+    boolean first  = a < b;
+    boolean second = b < c;
+    boolean third  = c < d;
 
-    if ( first &amp;&amp; second &amp;&amp; third )  {
+    if ( first && second && third )  {
         return true;
     } else {
         return false;
@@ -125,7 +125,7 @@ To compare the run-time performance of the two approaches, I benchmarked the sim
 
 [sourcecode language="java"]
     private boolean methodOne(int a, int b)  {
-        if ( a &lt; b )  {
+        if ( a < b )  {
             return true;
         } else {
             return false;
@@ -133,7 +133,7 @@ To compare the run-time performance of the two approaches, I benchmarked the sim
     }
     
     private boolean methodTwo(int a, int b)  {
-        boolean first  = a&lt;b;
+        boolean first  = a < b;
     
         if ( first )  {
             return true;

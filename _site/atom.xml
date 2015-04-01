@@ -3,7 +3,7 @@
   <title>Feed Name</title>
   <link href="http://domain/"/>
   <link type="application/atom+xml" rel="self" href="http://domain/atom.xml"/>
-  <updated>2015-03-31T22:45:23.020075-07:00</updated>
+  <updated>2015-03-31T23:11:21.9642415-07:00</updated>
   <id>http://domain/</id>
   <author>
     <name>Author</name>
@@ -31,9 +31,8 @@ There are two options. The easy way:
 This installs everything for you with no issue, however it&apos;s an older version (as seems to be a common issue with the Ubuntu repositories). At the time of writing it&apos;s at 4.7.0. You can also install Chicken by compiling from source. Download the tarball from &lt;a href=&quot;http://code.call-cc.org/releases/4.8.0/&quot; target=&quot;_blank&quot;&gt;call-cc.org&lt;/a&gt;, untar, and follow the INSTALL instructions. Easy!
 &lt;h3&gt;CouchDB Egg&lt;/h3&gt;
 Chicken Scheme has an extension system which packages and distributes &quot;&lt;a href=&quot;http://wiki.call-cc.org/eggs&quot; target=&quot;_blank&quot;&gt;eggs&lt;/a&gt;.&quot; An egg consists of Scheme sources plus some meta information such as build scripts and egg dependencies. You can install an egg using the chicken-install utility that comes with Chicken.
-&lt;p&gt;[code language=&amp;quot;Bash&amp;quot;]
-chicken-install -sudo couchdb
-[/code]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chicken-install -sudo couchdb
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This will download the &lt;a href=&quot;http://wiki.call-cc.org/eggref/4/couchdb&quot; target=&quot;_blank&quot;&gt;couchdb egg&lt;/a&gt; along with all eggs in the dependency tree. The utility then begins compiling and installing all eggs along the way. If you don&apos;t do a lot of development, chances are likely that you will run into system dependencies that are unmet. Chicken Scheme compiles to C, and as such many eggs have dependencies on C libraries.&lt;/p&gt;
 &lt;p&gt;The one I hit with couchdb in particular was openssl. These system lib dependencies can be a little tricky to identify. Two tips:&lt;/p&gt;
 &lt;ul&gt;
@@ -42,38 +41,33 @@ chicken-install -sudo couchdb
 &lt;/ul&gt;
 For example, my first attempt at installing the couchdb egg failed due to missing openssl header files. The install utility was attempting to compile the openssl egg, which was a dependency of the http-client egg, which is a dependency of the couchdb egg.
 &lt;p&gt;A few searches for openssl and I satisfied the dependency with the following command:&lt;/p&gt;
-&lt;p&gt;[code language=&amp;quot;Bash&amp;quot;]
-sudo apt-get install libssl-dev
-[/code]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install libssl-dev
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;With that successfully in place, another call to install the couchdb egg succeeded.&lt;/p&gt;
 &lt;h1&gt;Playing Around&lt;/h1&gt;
 I didn&apos;t have time to compile and install a CouchDB server on my machine, so &lt;em&gt;to the cloud&lt;/em&gt; I went. I signed up for an account at &lt;a href=&quot;https://cloudant.com/&quot; target=&quot;_blank&quot;&gt;cloudant.com&lt;/a&gt; which provides a free-for-small-databases CouchDB compatible database. After signing up, I imported the example database aptly named &quot;crud&quot; and began toying around.
 &lt;p&gt;Booting up csi, the Chicken Scheme interpreter, I called &lt;code&gt;(use couchdb)&lt;/code&gt; and set out to play. The first hurdle: making a connection. The current documentation says to use something along the lines of &lt;code&gt;(define couch (make-connection &amp;quot;databasename&amp;quot; &amp;quot;http://localhost:123&amp;quot;))&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;That failed miserably.&lt;/p&gt;
 &lt;p&gt;No matter what I tried, the command &lt;code&gt;(get-server-info couch)&lt;/code&gt; would fail with a connection refused. &lt;code&gt;(connection-uri couch)&lt;/code&gt; showed that the URI struct was still pointing at localhost. Luckily, the &lt;a href=&quot;http://code.call-cc.org/svn/chicken-eggs/release/4/&quot; target=&quot;_blank&quot;&gt;source for Chicken eggs&lt;/a&gt; are available, even for CouchDB. The make-connection function is created by the &lt;code&gt;(defstruct connection ...)&lt;/code&gt; expression. I noticed that the server attribute of connection struct is a &lt;code&gt;uri-reference&lt;/code&gt;, &lt;em&gt;not&lt;/em&gt; a string. Reading through the defstruct docs I figured out the following worked - woot.&lt;/p&gt;
-&lt;p&gt;[code]
-(import uri-common)
+&lt;pre&gt;&lt;code&gt;(import uri-common)
 (define cloudant-url server: (uri-reference &amp;quot;https://username:password@username.cloudant.com&amp;quot;))
 (define cloudant (make-connection server: cloudant-url database: &amp;quot;crud&amp;quot;))
 (get-server-info cloudant)
-[/code]&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This returns JSON data in Scheme structure:&lt;/p&gt;
-&lt;p&gt;[code]
-#((&amp;quot;couchdb&amp;quot; . &amp;quot;Welcome&amp;quot;)
-(&amp;quot;version&amp;quot; . &amp;quot;1.0.2&amp;quot;)
-(&amp;quot;cloudant_build&amp;quot; . &amp;quot;768&amp;quot;))
-[/code]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#((&amp;quot;couchdb&amp;quot; . &amp;quot;Welcome&amp;quot;)
+  (&amp;quot;version&amp;quot; . &amp;quot;1.0.2&amp;quot;)
+  (&amp;quot;cloudant_build&amp;quot; . &amp;quot;768&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Since I&apos;m new to Scheme, getting the data out was a bit odd, and I&apos;m sure completely inefficient.&lt;/p&gt;
-&lt;p&gt;[code]
-(define server-info (vector-&amp;gt;list (get-server-info cloudant)))
+&lt;pre&gt;&lt;code&gt;(define server-info (vector-&amp;gt;list (get-server-info cloudant)))
 (alist-ref &amp;quot;version&amp;quot; server-info equal?)
-[/code]&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;That about sums it up. Hopefully I figure more stuff out and post some updates. Feel free to comment if I&apos;m reading the JSON structure in a completely asinine way. The vector-&amp;gt;list doesn&apos;t seem right.&lt;/p&gt;
 &lt;h1&gt;Update&lt;/h1&gt;
 The couchdb egg documentation has been updated to cover most of this. I&apos;ve also noticed a generally handy function that is exported by the couchdb module, json-ref, that makes it simple to grab top-level JSON items like &quot;version&quot; above.
-&lt;p&gt;[code]
-(define server-version (json-ref &apos;version (get-server-info cloudant)))
-[/code]&lt;/p&gt;</content>
+&lt;pre&gt;&lt;code&gt;(define server-version (json-ref &apos;version (get-server-info cloudant)))
+&lt;/code&gt;&lt;/pre&gt;</content>
   </entry>
   
   <entry>
@@ -344,10 +338,10 @@ Code:
 &lt;p&gt;Now let&apos;s compare to the documented version:&lt;/p&gt;
 &lt;p&gt;[sourcecode language=&amp;quot;java&amp;quot;]
 private boolean methodTwo(int a, int b, int c, int d)  {
-boolean first  = a&amp;lt;b;
-boolean second = b&amp;lt;c;
-boolean third  = c&amp;lt;d;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if ( first &amp;amp;amp;&amp;amp;amp; second &amp;amp;amp;&amp;amp;amp; third )  {
+boolean first  = a &amp;lt; b;
+boolean second = b &amp;lt; c;
+boolean third  = c &amp;lt; d;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if ( first &amp;amp;&amp;amp; second &amp;amp;&amp;amp; third )  {
     return true;
 } else {
     return false;
@@ -403,7 +397,7 @@ return false;
 }
 }&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;private boolean methodTwo(int a, int b)  {
-    boolean first  = a&amp;amp;lt;b;
+    boolean first  = a &amp;lt; b;
 
     if ( first )  {
         return true;
