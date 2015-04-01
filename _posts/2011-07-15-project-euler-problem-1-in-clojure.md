@@ -73,7 +73,7 @@ The idea here is the same as the procedural style: loop through numbers 1-1000, 
 (defn sum-it-up
   [max]
   (loop [sum 0 adder 1]
-	(if (``` adder max)
+	(if (< adder max)
 	  (let [mult3 (is-multiple? adder 3)
 			mult5 (is-multiple? adder 5)
 			sumadder (if (or mult3 mult5) adder 0)]
@@ -85,9 +85,9 @@ The idea here is the same as the procedural style: loop through numbers 1-1000, 
 
 After a few iterations, this was the result. Things I added include:
 
- * Use <a href="http://clojure.github.com/clojure/clojure.core-api.html#clojure.core/loop" target="_blank">loop</a>/<a href="http://clojure.org/special_forms#recur" target="_blank">recur</a> - this allows me to define a single function versus two (one to recurse and one to setup) and also allows for <a href="http://en.wikipedia.org/wiki/Tail_call" target="_blank">tail call optimization</a>. Without the use of recur, the JVM would quickly run out of stack space.</li>
- * Removed the specialized is-multiple functions - they were more for experimentation anyways.</li>
- * Added a time function to keep track of optimizations. Something like this is a pain in Java, full of boilerplate.</li>
+ * Use <a href="http://clojure.github.com/clojure/clojure.core-api.html#clojure.core/loop" target="_blank">loop</a>/<a href="http://clojure.org/special_forms#recur" target="_blank">recur</a> - this allows me to define a single function versus two (one to recurse and one to setup) and also allows for <a href="http://en.wikipedia.org/wiki/Tail_call" target="_blank">tail call optimization</a>. Without the use of recur, the JVM would quickly run out of stack space.
+ * Removed the specialized is-multiple functions - they were more for experimentation anyways.
+ * Added a time function to keep track of optimizations. Something like this is a pain in Java, full of boilerplate.
 
 However, this solution has a few things that I don't like: it still requires iterating over all numbers 1 to max, the conditional for multiples looks "wonky" (that's an official term by the way) and out of place, and it's still <i>long</i>. There has to be a cleaner way.
 
@@ -103,17 +103,23 @@ Clojure has the ability to generate <a href="http://clojure.org/sequences" targe
 
 So what does it mean? It's easiest to read the code from the innermost forms to the outermost. So I'll start:
 
-```(range (inc max))```
+```
+(range (inc max))
+```
 
 generates a lazy-sequence from [0-max] (note inclusive). By lazy, it means it's not actually in memory and will only be created as called. Note that I could have also done the following:
 
-```(map #(inc %) (range max))```
+```
+(map #(inc %) (range max))
+```
 
 I actually think this makes a little more sense -- it generates 1-max inclusive since we really don't want 0. However, since 0 doesn't matter in a summation I went ahead and left it in. Timing showed a difference of 3 ms favoring my chosen implementation.
 
 Next up we filter that range to only include our multiples using the following:
 
-```(filter #(or (is-multiple? % 3) (is-multiple? % 5)) RANGE)```
+```
+(filter #(or (is-multiple? % 3) (is-multiple? % 5)) RANGE)
+```
 
 Note that this also returns a lazy sequence as well. Filter takes two arguments, a predicate function that should return true or false and a collection. In this case, the predicate function is an anonymous function that returns true if the value is a multiple of 3 or 5.
 

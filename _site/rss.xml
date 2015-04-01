@@ -6,8 +6,8 @@
     <atom:link href="http://domain/rss.xml" rel="self" type="application/rss+xml" />
     <description></description>
     <language>en-au</language>
-    <pubDate>Tue, 31 Mar 2015 23:18:11 %z</pubDate>
-    <lastBuildDate>Tue, 31 Mar 2015 23:18:11 %z</lastBuildDate>
+    <pubDate>Tue, 31 Mar 2015 23:31:50 %z</pubDate>
+    <lastBuildDate>Tue, 31 Mar 2015 23:31:50 %z</lastBuildDate>
     
     <item>
       <title>Chicken Scheme and CouchDB</title>
@@ -15,32 +15,33 @@
       <pubDate>Wed, 24 Oct 2012 00:00:00 %z</pubDate>
       <author>Author</author>
       <guid>http://domain/ChickenScheme/CouchDB/2012/10/24/chicken-scheme-and-couchdb.html</guid>
-      <description>&lt;h1&gt;But Why?&lt;/h1&gt;
-I&apos;ve recently been playing around with &lt;a href=&quot;http://call-cc.org/&quot; target=&quot;_blank&quot;&gt;Chicken Scheme&lt;/a&gt;, leaving poor Clojure all high and dry (minus some visits to the newly started &lt;a href=&quot;http://www.meetup.com/DFW-Clojure/&quot; target=&quot;_blank&quot;&gt;DFW-Clojure User Group&lt;/a&gt;). After building a service in C at work, I&apos;ve caught the high-performance bug and Clojure hasn&apos;t particularly been helpful in that regard. I&apos;ve also found Chicken Scheme to be very simple with a more straightforward syntax than Clojure. I&apos;ll still use Clojure, and am using it on a web-app side-project, but client side I&apos;m really digging Chicken.
+      <description>&lt;h2&gt;Why?&lt;/h2&gt;
+&lt;p&gt;I&apos;ve recently been playing around with &lt;a href=&quot;http://call-cc.org/&quot; target=&quot;_blank&quot;&gt;Chicken Scheme&lt;/a&gt;, leaving poor Clojure all high and dry (minus some visits to the newly started &lt;a href=&quot;http://www.meetup.com/DFW-Clojure/&quot; target=&quot;_blank&quot;&gt;DFW-Clojure User Group&lt;/a&gt;). After building a service in C at work, I&apos;ve caught the high-performance bug and Clojure hasn&apos;t particularly been helpful in that regard. I&apos;ve also found Chicken Scheme to be very simple with a more straightforward syntax than Clojure. I&apos;ll still use Clojure, and am using it on a web-app side-project, but client side I&apos;m really digging Chicken.&lt;/p&gt;
 &lt;p&gt;I&apos;ve also been using MongoDB, but (OMG!) there&apos;s no driver currently for MongoDB in Chicken Scheme. Until I have the chops to write my own version, I decided I might as well learn a similar DB: enter &lt;a href=&quot;http://couchdb.apache.org/&quot; target=&quot;_blank&quot;&gt;Couch&lt;/a&gt;. In my naive view, it&apos;s very similar to Mongo - it&apos;s a document-oriented database with JSON (or &lt;a href=&quot;http://bsonspec.org/&quot; target=&quot;_blank&quot;&gt;variation thereof&lt;/a&gt;) as its representative data structure. Even cooler, it&apos;s already been ported to &lt;a href=&quot;http://openbbnews.wordpress.com/2012/01/13/couchdb-playbook/&quot; target=&quot;_blank&quot;&gt;BlackBerry 10&lt;/a&gt;. This gives me some really good ideas for new projects.&lt;/p&gt;
-&lt;h1&gt;The Setup&lt;/h1&gt;
-I&apos;m currently running &lt;a href=&quot;http://linuxmint.com/&quot; target=&quot;_blank&quot;&gt;Linux Mint&lt;/a&gt;, a &quot;fork&quot; of Ubuntu, so this setup guide follows what was necessary for me to get up and going with Chicken Scheme and CouchDB.
+&lt;h2&gt;The Setup&lt;/h2&gt;
+&lt;p&gt;I&apos;m currently running &lt;a href=&quot;http://linuxmint.com/&quot; target=&quot;_blank&quot;&gt;Linux Mint&lt;/a&gt;, a &amp;quot;fork&amp;quot; of Ubuntu, so this setup guide follows what was necessary for me to get up and going with Chicken Scheme and CouchDB.&lt;/p&gt;
 &lt;h3&gt;Chicken Scheme&lt;/h3&gt;
-There are two options. The easy way:
-&lt;pre&gt;sudo apt-get install chicken-bin.&lt;/pre&gt;
-This installs everything for you with no issue, however it&apos;s an older version (as seems to be a common issue with the Ubuntu repositories). At the time of writing it&apos;s at 4.7.0. You can also install Chicken by compiling from source. Download the tarball from &lt;a href=&quot;http://code.call-cc.org/releases/4.8.0/&quot; target=&quot;_blank&quot;&gt;call-cc.org&lt;/a&gt;, untar, and follow the INSTALL instructions. Easy!
+&lt;p&gt;There are two options. The easy way:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install chicken-bin.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This installs everything for you with no issue, however it&apos;s an older version (as seems to be a common issue with the Ubuntu repositories). At the time of writing it&apos;s at 4.7.0. You can also install Chicken by compiling from source. Download the tarball from &lt;a href=&quot;http://code.call-cc.org/releases/4.8.0/&quot; target=&quot;_blank&quot;&gt;call-cc.org&lt;/a&gt;, untar, and follow the INSTALL instructions. Easy!&lt;/p&gt;
 &lt;h3&gt;CouchDB Egg&lt;/h3&gt;
-Chicken Scheme has an extension system which packages and distributes &quot;&lt;a href=&quot;http://wiki.call-cc.org/eggs&quot; target=&quot;_blank&quot;&gt;eggs&lt;/a&gt;.&quot; An egg consists of Scheme sources plus some meta information such as build scripts and egg dependencies. You can install an egg using the chicken-install utility that comes with Chicken.
+&lt;p&gt;Chicken Scheme has an extension system which packages and distributes &amp;quot;&lt;a href=&quot;http://wiki.call-cc.org/eggs&quot; target=&quot;_blank&quot;&gt;eggs&lt;/a&gt;.&amp;quot; An egg consists of Scheme sources plus some meta information such as build scripts and egg dependencies. You can install an egg using the chicken-install utility that comes with Chicken.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chicken-install -sudo couchdb
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This will download the &lt;a href=&quot;http://wiki.call-cc.org/eggref/4/couchdb&quot; target=&quot;_blank&quot;&gt;couchdb egg&lt;/a&gt; along with all eggs in the dependency tree. The utility then begins compiling and installing all eggs along the way. If you don&apos;t do a lot of development, chances are likely that you will run into system dependencies that are unmet. Chicken Scheme compiles to C, and as such many eggs have dependencies on C libraries.&lt;/p&gt;
 &lt;p&gt;The one I hit with couchdb in particular was openssl. These system lib dependencies can be a little tricky to identify. Two tips:&lt;/p&gt;
 &lt;ul&gt;
-    &lt;li&gt;See which egg is failing, then find it in the egg index and look through it&apos;s notes which &lt;em&gt;usually&lt;/em&gt; indicate dependencies&lt;/li&gt;
-    &lt;li&gt;Read the error message and decipher from there.&lt;/li&gt;
+&lt;li&gt;See which egg is failing, then find it in the egg index and look through it&apos;s notes which /usually/ indicate dependencies&lt;/li&gt;
+&lt;li&gt;Read the error message and decipher from there.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;For example, my first attempt at installing the couchdb egg failed due to missing openssl header files. The install utility was attempting to compile the openssl egg, which was a dependency of the http-client egg, which is a dependency of the couchdb egg.&lt;/p&gt;
 &lt;p&gt;A few searches for openssl and I satisfied the dependency with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get install libssl-dev
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;With that successfully in place, another call to install the couchdb egg succeeded.&lt;/p&gt;
-&lt;h1&gt;Playing Around&lt;/h1&gt;
-I didn&apos;t have time to compile and install a CouchDB server on my machine, so &lt;em&gt;to the cloud&lt;/em&gt; I went. I signed up for an account at &lt;a href=&quot;https://cloudant.com/&quot; target=&quot;_blank&quot;&gt;cloudant.com&lt;/a&gt; which provides a free-for-small-databases CouchDB compatible database. After signing up, I imported the example database aptly named &quot;crud&quot; and began toying around.
+&lt;h2&gt;Playing Around&lt;/h2&gt;
+&lt;p&gt;I didn&apos;t have time to compile and install a CouchDB server on my machine, so &lt;em&gt;to the cloud&lt;/em&gt; I went. I signed up for an account at &lt;a href=&quot;https://cloudant.com/&quot; target=&quot;_blank&quot;&gt;cloudant.com&lt;/a&gt; which provides a free-for-small-databases CouchDB compatible database. After signing up, I imported the example database aptly named &amp;quot;crud&amp;quot; and began toying around.&lt;/p&gt;
 &lt;p&gt;Booting up csi, the Chicken Scheme interpreter, I called &lt;code&gt;(use couchdb)&lt;/code&gt; and set out to play. The first hurdle: making a connection. The current documentation says to use something along the lines of &lt;code&gt;(define couch (make-connection &amp;quot;databasename&amp;quot; &amp;quot;http://localhost:123&amp;quot;))&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;That failed miserably.&lt;/p&gt;
 &lt;p&gt;No matter what I tried, the command &lt;code&gt;(get-server-info couch)&lt;/code&gt; would fail with a connection refused. &lt;code&gt;(connection-uri couch)&lt;/code&gt; showed that the URI struct was still pointing at localhost. Luckily, the &lt;a href=&quot;http://code.call-cc.org/svn/chicken-eggs/release/4/&quot; target=&quot;_blank&quot;&gt;source for Chicken eggs&lt;/a&gt; are available, even for CouchDB. The make-connection function is created by the &lt;code&gt;(defstruct connection ...)&lt;/code&gt; expression. I noticed that the server attribute of connection struct is a &lt;code&gt;uri-reference&lt;/code&gt;, &lt;em&gt;not&lt;/em&gt; a string. Reading through the defstruct docs I figured out the following worked - woot.&lt;/p&gt;
@@ -59,8 +60,8 @@ I didn&apos;t have time to compile and install a CouchDB server on my machine, s
 (alist-ref &amp;quot;version&amp;quot; server-info equal?)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;That about sums it up. Hopefully I figure more stuff out and post some updates. Feel free to comment if I&apos;m reading the JSON structure in a completely asinine way. The vector-&amp;gt;list doesn&apos;t seem right.&lt;/p&gt;
-&lt;h1&gt;Update&lt;/h1&gt;
-The couchdb egg documentation has been updated to cover most of this. I&apos;ve also noticed a generally handy function that is exported by the couchdb module, json-ref, that makes it simple to grab top-level JSON items like &quot;version&quot; above.
+&lt;h2&gt;Update&lt;/h2&gt;
+&lt;p&gt;The couchdb egg documentation has been updated to cover most of this. I&apos;ve also noticed a generally handy function that is exported by the couchdb module, json-ref, that makes it simple to grab top-level JSON items like &amp;quot;version&amp;quot; above.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;(define server-version (json-ref &apos;version (get-server-info cloudant)))
 &lt;/code&gt;&lt;/pre&gt;</description>
     </item>
@@ -71,38 +72,43 @@ The couchdb egg documentation has been updated to cover most of this. I&apos;ve 
       <pubDate>Tue, 18 Sep 2012 00:00:00 %z</pubDate>
       <author>Author</author>
       <guid>http://domain/Clojure/ClojureScript/2012/09/18/clojurescript-gotchas-tips.html</guid>
-      <description>&lt;p&gt;I&apos;ve been playing a lot lately with ClojureScript, especially with regards to mobile development (more on that to come later). Clojure has never been known for great error messages, and ClojureScript is probably even worse in that regard.&lt;/p&gt;
+      <description>&lt;p&gt;I&apos;ve been playing a lot lately with &lt;a href=&quot;https://github.com/clojure/clojurescript&quot;&gt;ClojureScript&lt;/a&gt;, especially with regards to mobile development (more on that to come later). Clojure has never been known for great error messages, and ClojureScript is probably even worse in that regard.&lt;/p&gt;
 &lt;p&gt;Included below are a list of things that gave me a rough time. Some are pretty simple, but needless to say they got me. Hopefully they won&apos;t get you.&lt;/p&gt;
-&lt;h1&gt;Gotchas&lt;/h1&gt;
-&lt;h3&gt;namespaces etc&lt;/h3&gt;
-The ns function is very special in ClojureScript when compared to Clojure. I won&apos;t go over all the differences, those have been covered, but I&apos;ll highlight a few things quickly: only one namespace per file; use requires only and require requires as; REPL requires load-namespace instead of ns call; invalid require statements don&apos;t give compile errors.
-&lt;p&gt;A big one that got me is requiring/using the Google Closure libs and classes. When you require them in your namespace, the ClojureScript compiler just outputs goog.require(&amp;quot;goog.foobar&amp;quot;). The :as makes no difference here. When you refer to the functions/objects, you have to use the fully qualified name, e.g. (goog.foobar/baz 42).&lt;/p&gt;
+&lt;h2&gt;Gotchas&lt;/h2&gt;
+&lt;h3&gt;Namespaces etc&lt;/h3&gt;
+&lt;p&gt;The ns function is very special in ClojureScript when compared to Clojure. I won&apos;t go over all the differences, those have been covered, but I&apos;ll highlight a few things quickly: only one namespace per file; use requires only and require requires as; REPL requires load-namespace instead of ns call; invalid require statements don&apos;t give compile errors.&lt;/p&gt;
+&lt;p&gt;A big one that got me is requiring/using the Google Closure libs and classes. When you require them in your namespace, the ClojureScript compiler just outputs &lt;code&gt;goog.require(&amp;quot;goog.foobar&amp;quot;)&lt;/code&gt;. The &lt;code&gt;:as&lt;/code&gt; makes no difference here. When you refer to the functions/objects, you have to use the fully qualified name, e.g. &lt;code&gt;(goog.foobar/baz 42)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;To sum that annoying issue up, you have to both require and use the fully-qualified name.&lt;/p&gt;
 &lt;h3&gt;Interop With JS Objects&lt;/h3&gt;
-Sometimes you just have to fall back. Use the js* function to create some straight-up JavaScript:
-&lt;pre&gt;((js* &quot;alert&quot;) &quot;Hello&quot;)&lt;/pre&gt;
-There will also come a time when you have to create an object to interop with a JavaScript library. It would be nice if ClojureScript maps/lists could be output as an object, but that may just be wishful thinking. In other words, you&apos;ll have to copy and paste one of the dozen or so implementations into your code.
+&lt;p&gt;Sometimes you just have to fall back. Use the js* function to create some straight-up JavaScript:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;((js* &amp;quot;alert&amp;quot;) &amp;quot;Hello&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There will also come a time when you have to create an object to interop with a JavaScript library. It would be nice if ClojureScript maps/lists could be output as an object, but that may just be wishful thinking. In other words, you&apos;ll have to copy and paste one of the dozen or so implementations into your code.&lt;/p&gt;
 &lt;p&gt;You can also use the goog.object package for help which is wrapped by several CLJS functions, the primary one being js-obj which takes arguments and simply applies them to goog.object/create.&lt;/p&gt;
 &lt;p&gt;Example:&lt;/p&gt;
-&lt;pre&gt;(js-keys (js-obj &quot;name&quot; &quot;Ben Franklin&quot; &quot;age&quot; 88 &quot;height&quot; 60))&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;(js-keys (js-obj &amp;quot;name&amp;quot; &amp;quot;Ben Franklin&amp;quot; &amp;quot;age&amp;quot; 88 &amp;quot;height&amp;quot; 60))
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;Arity With Functions&lt;/h3&gt;
-When you define a function using defn, it creates a JavaScript function in the background. JavaScript functions do not enforce arity. This means you can do something like this without any failure, only unexpected results.
-&lt;pre&gt;(defn tip-cows [])
-(tip-cows 1 &quot;zebra&quot;)&lt;/pre&gt;
+&lt;p&gt;When you define a function using defn, it creates a JavaScript function in the background. JavaScript functions do not enforce arity. This means you can do something like this without any failure, only unexpected results.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(defn tip-cows [])
+(tip-cows 1 &amp;quot;zebra&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;The Compiler Doesn&apos;t Care&lt;/h3&gt;
-Don&apos;t expect the compiler to help you out chasing and picking out errors. The compiler only ensures the code can be read and checks for a few minor things (like :require has :as, etc). The vast majority of errors will be found at runtime. You&apos;ll have to change your mindset from compiled language to interpreted language.
-&lt;h1&gt;Tips&lt;/h1&gt;
-&lt;a href=&quot;http://himera.herokuapp.com&quot; target=&quot;_blank&quot;&gt;Himera ClojureScript REPL&lt;/a&gt; - An online REPL. Very useful! Don&apos;t miss the Summary page.
-&lt;p&gt;Don&apos;t expect (= :ClojureScript :Clojure). They are different.&lt;/p&gt;
+&lt;p&gt;Don&apos;t expect the compiler to help you out chasing and picking out errors. The compiler only ensures the code can be read and checks for a few minor things (like :require has :as, etc). The vast majority of errors will be found at runtime. You&apos;ll have to change your mindset from compiled language to interpreted language.&lt;/p&gt;
+&lt;h2&gt;Tips&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;http://himera.herokuapp.com&quot; target=&quot;_blank&quot;&gt;Himera ClojureScript REPL&lt;/a&gt; - An online REPL. Very useful! Don&apos;t miss the Summary page.&lt;/p&gt;
+&lt;p&gt;Don&apos;t expect &lt;code&gt;(= :ClojureScript :Clojure)&lt;/code&gt;. They are different.&lt;/p&gt;
 &lt;p&gt;Surf the &lt;a href=&quot;https://github.com/clojure/clojurescript/blob/master/src/cljs/cljs/core.cljs&quot; target=&quot;_blank&quot;&gt;source&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;When you get a &amp;quot;call undefined&amp;quot; error, you most likely forgot your require, misspelled it, or similar.&lt;/p&gt;
 &lt;p&gt;When you get an error, or something goes bad, load up the JavaScript console and play around. It obviously helps to know JavaScript to some extent here. For example, if you get an undefined error in something like:&lt;/p&gt;
-&lt;pre&gt;goog.foobar.baz.call(null, helloworld.core.mydef);&lt;/pre&gt;
-You could use the console to probe and find the culprit, e.g. type
-&lt;pre&gt;goog;
+&lt;pre&gt;&lt;code&gt;goog.foobar.baz.call(null, helloworld.core.mydef);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You could use the console to probe and find the culprit, e.g. type&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;goog;
 goog.foobar;
-goog.foobar.baz;&lt;/pre&gt;
-Keep probing the environment to see what is not as is expected.</description>
+goog.foobar.baz;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Keep probing the environment to see what is not as is expected.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -227,7 +233,7 @@ public void printTest()  {
 (defn sum-it-up
   [max]
   (loop [sum 0 adder 1]
-    (if (``` adder max)
+    (if (&amp;lt; adder max)
       (let [mult3 (is-multiple? adder 3)
             mult5 (is-multiple? adder 5)
             sumadder (if (or mult3 mult5) adder 0)]
@@ -238,9 +244,9 @@ public void printTest()  {
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;After a few iterations, this was the result. Things I added include:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Use &lt;a href=&quot;http://clojure.github.com/clojure/clojure.core-api.html#clojure.core/loop&quot; target=&quot;_blank&quot;&gt;loop&lt;/a&gt;/&lt;a href=&quot;http://clojure.org/special_forms#recur&quot; target=&quot;_blank&quot;&gt;recur&lt;/a&gt; - this allows me to define a single function versus two (one to recurse and one to setup) and also allows for &lt;a href=&quot;http://en.wikipedia.org/wiki/Tail_call&quot; target=&quot;_blank&quot;&gt;tail call optimization&lt;/a&gt;. Without the use of recur, the JVM would quickly run out of stack space.&lt;/li&gt;&lt;/li&gt;
-&lt;li&gt;Removed the specialized is-multiple functions - they were more for experimentation anyways.&lt;/li&gt;&lt;/li&gt;
-&lt;li&gt;Added a time function to keep track of optimizations. Something like this is a pain in Java, full of boilerplate.&lt;/li&gt;&lt;/li&gt;
+&lt;li&gt;Use &lt;a href=&quot;http://clojure.github.com/clojure/clojure.core-api.html#clojure.core/loop&quot; target=&quot;_blank&quot;&gt;loop&lt;/a&gt;/&lt;a href=&quot;http://clojure.org/special_forms#recur&quot; target=&quot;_blank&quot;&gt;recur&lt;/a&gt; - this allows me to define a single function versus two (one to recurse and one to setup) and also allows for &lt;a href=&quot;http://en.wikipedia.org/wiki/Tail_call&quot; target=&quot;_blank&quot;&gt;tail call optimization&lt;/a&gt;. Without the use of recur, the JVM would quickly run out of stack space.&lt;/li&gt;
+&lt;li&gt;Removed the specialized is-multiple functions - they were more for experimentation anyways.&lt;/li&gt;
+&lt;li&gt;Added a time function to keep track of optimizations. Something like this is a pain in Java, full of boilerplate.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;However, this solution has a few things that I don&apos;t like: it still requires iterating over all numbers 1 to max, the conditional for multiples looks &amp;quot;wonky&amp;quot; (that&apos;s an official term by the way) and out of place, and it&apos;s still &lt;i&gt;long&lt;/i&gt;. There has to be a cleaner way.&lt;/p&gt;
 &lt;p&gt;Clojure has the ability to generate &lt;a href=&quot;http://clojure.org/sequences&quot; target=&quot;_blank&quot;&gt;lazy sequences&lt;/a&gt; - you define the sequences via functions and the values are generated only when retrieved. If I can create a sequence consisting of all multiples of 3 and 5 from 1 to max, I could do a simple call to sum them all. After playing around with the different sequence functions available, I came up with the following:&lt;/p&gt;
@@ -251,12 +257,15 @@ public void printTest()  {
 (time (println &amp;quot;Result=&amp;quot; (sum-it-up 1000)))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;So what does it mean? It&apos;s easiest to read the code from the innermost forms to the outermost. So I&apos;ll start:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;(range (inc max))&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(range (inc max))
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;generates a lazy-sequence from [0-max] (note inclusive). By lazy, it means it&apos;s not actually in memory and will only be created as called. Note that I could have also done the following:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;(map #(inc %) (range max))&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(map #(inc %) (range max))
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I actually think this makes a little more sense -- it generates 1-max inclusive since we really don&apos;t want 0. However, since 0 doesn&apos;t matter in a summation I went ahead and left it in. Timing showed a difference of 3 ms favoring my chosen implementation.&lt;/p&gt;
 &lt;p&gt;Next up we filter that range to only include our multiples using the following:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;(filter #(or (is-multiple? % 3) (is-multiple? % 5)) RANGE)&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(filter #(or (is-multiple? % 3) (is-multiple? % 5)) RANGE)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Note that this also returns a lazy sequence as well. Filter takes two arguments, a predicate function that should return true or false and a collection. In this case, the predicate function is an anonymous function that returns true if the value is a multiple of 3 or 5.&lt;/p&gt;
 &lt;p&gt;Now that we have a sequence of all numbers [1-max] that are multiples of 3 or 5, it&apos;s time to sum them up. The code
 &lt;code&gt;(reduce + SEQUENCE-OF-MULTIPLES)&lt;/code&gt; is fairly straightforward. It acts like a looping accumulator taking each item off of the sequence and sending it, along with the accumulated value, to the predicate function (plus in this case) and then storing the result into the accumulator. Once all items have been processed, the accumulated result is returned.&lt;/p&gt;</description>
