@@ -3,7 +3,7 @@ title: Obsidian Theme for IDLE
 date: 2011-08-04
 layout: post
 categories:
-- Uncategorized
+ - Python
 tags: []
 ---
 

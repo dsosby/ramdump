@@ -2,8 +2,7 @@
 title: A human being...
 date: 2011-12-27
 layout: post
-categories:
-- Uncategorized
+categories: []
 tags:
 - miscellaneous
 - quote

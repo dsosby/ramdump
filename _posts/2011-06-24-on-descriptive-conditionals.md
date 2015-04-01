@@ -3,7 +3,7 @@ title: On Descriptive Conditionals
 date: 2011-06-24
 layout: post
 categories:
-- Code
+- Coding
 tags:
 - code
 - codestyle

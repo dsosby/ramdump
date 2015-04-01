@@ -2,6 +2,7 @@
 title: The Birth of RAM Dump
 date: 2011-06-16
 layout: post
+categories: []
 tags:
 - RAMDump
 ---

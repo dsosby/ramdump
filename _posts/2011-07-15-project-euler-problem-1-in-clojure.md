@@ -4,7 +4,6 @@ date: 2011-07-15
 layout: post
 categories:
 - Clojure
-- Code
 tags: []
 ---
 

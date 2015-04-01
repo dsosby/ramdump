@@ -3,7 +3,7 @@ title: Chicken Scheme and CouchDB
 date: 2012-10-24
 layout: post
 categories:
-- Chicken Scheme
+- ChickenScheme
 - CouchDB
 tags: []
 ---

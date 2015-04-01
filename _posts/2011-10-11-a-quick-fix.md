@@ -2,8 +2,7 @@
 title: A Quick Fix
 date: 2011-10-11
 layout: post
-categories:
-- Uncategorized
+categories: []
 tags: []
 ---
 
