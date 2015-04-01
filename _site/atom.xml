@@ -3,7 +3,7 @@
   <title>Feed Name</title>
   <link href="http://domain/"/>
   <link type="application/atom+xml" rel="self" href="http://domain/atom.xml"/>
-  <updated>2015-03-31T22:33:06.2589347-07:00</updated>
+  <updated>2015-03-31T22:45:23.020075-07:00</updated>
   <id>http://domain/</id>
   <author>
     <name>Author</name>
@@ -205,79 +205,87 @@ error-background = #293134
 &lt;li&gt;It &lt;strong&gt;runs on the JVM&lt;/strong&gt;, which &lt;i&gt;should&lt;/i&gt; mean that I can tie it in to my everyday work, and if I get really stuck provide a mechanism for me to code in something more familiar.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;It&apos;s new&lt;/strong&gt;, which satisfies my desire for shiny things.&lt;/li&gt;
 &lt;/ul&gt;
-So with that, the best way to learn a language is to try it out, and &lt;a href=&quot;http://projecteuler.net/&quot; target=&quot;_blank&quot;&gt;Project Euler&lt;/a&gt; provides many fun challenges to get you going. &lt;a href=&quot;http://projecteuler.net/index.php?section=problems&amp;amp;id=1&quot; target=&quot;_blank&quot;&gt;Problem 1&lt;/a&gt; is summarized as such: &quot;Find the sum of all the multiples of 3 or 5 below 1000.&quot; Remember, I&apos;m new to Clojure and &lt;a href=&quot;http://en.wikipedia.org/wiki/Functional_programming&quot; target=&quot;_blank&quot;&gt;functional programming&lt;/a&gt; in general, so if you see issues, feel free to comment.
-&lt;p&gt;The first thing that crosses my mind is how I would do this in procedural languages. First, the naive approach in Java
-[code language=&amp;quot;Java&amp;quot;]
-public int sumOfMultiples(int[] multiples, int max)  {
-int sum = 0;
-for ( int i=1 ; i&amp;lt;1000 ; i++ )  {
-for ( int j=0 ; j&amp;lt;multiples.length ; j++ )  {
-if ( i % multiples[j] == 0 )  {
-sum++;
-break;   //don&apos;t sum the same multiple twice
+&lt;p&gt;So with that, the best way to learn a language is to try it out, and &lt;a href=&quot;http://projecteuler.net/&quot; target=&quot;_blank&quot;&gt;Project Euler&lt;/a&gt; provides many fun challenges to get you going. &lt;a href=&quot;http://projecteuler.net/index.php?section=problems&amp;amp;id=1&quot; target=&quot;_blank&quot;&gt;Problem 1&lt;/a&gt; is summarized as such: &amp;quot;Find the sum of all the multiples of 3 or 5 below 1000.&amp;quot; Remember, I&apos;m new to Clojure and &lt;a href=&quot;http://en.wikipedia.org/wiki/Functional_programming&quot; target=&quot;_blank&quot;&gt;functional programming&lt;/a&gt; in general, so if you see issues, feel free to comment.&lt;/p&gt;
+&lt;p&gt;The first thing that crosses my mind is how I would do this in procedural languages. First, the naive approach in Java&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public int sumOfMultiples(int[] multiples, int max)  {
+    int sum = 0;
+    for ( int i=1 ; i&amp;amp;lt;1000 ; i++ )  {
+        for ( int j=0 ; j&amp;amp;lt;multiples.length ; j++ )  {
+            if ( i % multiples[j] == 0 )  {
+                sum++;
+                break;   //don&apos;t sum the same multiple twice
+            }
+        }
+    }
+
+    return sum;
 }
+
+public void printTest()  {
+    System.out.println(&amp;amp;quot;Result = &amp;amp;quot; + sumOfMultiples([3,5], 1000));
 }
-}&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;return sum;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;}&lt;/p&gt;
-&lt;p&gt;public void printTest()  {
-System.out.println(&amp;quot;Result = &amp;quot; + sumOfMultiples([3,5], 1000));
-}
-[/code]&lt;/p&gt;
 &lt;p&gt;Like I said, this is a naive approach and has several issues that I will cover later in the post. But as a first shot, I try porting the idea to Clojure.&lt;/p&gt;
-&lt;p&gt;[code language=&amp;quot;clojure&amp;quot;]
-;Project Euler Problem 1
-;Return the sum of all unique multiples of 3 and 5 up to 1000&lt;/p&gt;
-&lt;p&gt;(defn is-multiple [x y]
-(zero? (mod x y)))&lt;/p&gt;
-&lt;p&gt;(defn multiple3? [x] (is-multiple x 3))
-(defn multiple5? [x] (is-multiple x 5))&lt;/p&gt;
-&lt;p&gt;(defn sum-it-up [sum adder max]
-(if (&amp;lt; adder max)
-(let [sumadder (if (multiple3? adder) adder (if (multiple5? adder) adder 0))]
-(sum-it-up (+ sum sumadder) (inc adder) max))
-sum))&lt;/p&gt;
-&lt;p&gt;(defn do-summation [max]
-(sum-it-up 0 1 max))&lt;/p&gt;
-&lt;p&gt;(println &amp;quot;Result=&amp;quot; (do-summation 1000))
-[/code]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;;Project Euler Problem 1
+;Return the sum of all unique multiples of 3 and 5 up to 1000
+
+(defn is-multiple [x y]
+  (zero? (mod x y)))
+
+(defn multiple3? [x] (is-multiple x 3))
+(defn multiple5? [x] (is-multiple x 5))
+
+(defn sum-it-up [sum adder max]
+  (if (&amp;amp;lt; adder max)
+    (let [sumadder (if (multiple3? adder) adder (if (multiple5? adder) adder 0))]
+      (sum-it-up (+ sum sumadder) (inc adder) max))
+    sum))
+
+(defn do-summation [max]
+  (sum-it-up 0 1 max))
+
+(println &amp;amp;quot;Result=&amp;amp;quot; (do-summation 1000))
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The idea here is the same as the procedural style: loop through numbers 1-1000, and if the number is a multiple of 3 or 5, add it up. Since I don&apos;t want an external state to manipulate throughout the loop, I use recursion and keep track of the state within the function itself. This is the code the got me the correct answer first, so I kept refactoring it as I read more about Clojure.&lt;/p&gt;
-&lt;p&gt;[code language=&amp;quot;clojure&amp;quot;]
-(defn is-multiple? [x y]
-(zero? (mod x y)))&lt;/p&gt;
-&lt;p&gt;(defn sum-it-up
-[max]
-(loop [sum 0 adder 1]
-(if (&amp;lt; adder max)
-(let [mult3 (is-multiple? adder 3)
-mult5 (is-multiple? adder 5)
-sumadder (if (or mult3 mult5) adder 0)]
-(recur (+ sum sumadder) (inc adder)))
-sum)))&lt;/p&gt;
-&lt;p&gt;(time (println &amp;quot;Result=&amp;quot; (sum-it-up 1000)))
-[/code]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(defn is-multiple? [x y]
+  (zero? (mod x y)))
+
+(defn sum-it-up
+  [max]
+  (loop [sum 0 adder 1]
+    (if (&amp;amp;lt; adder max)
+      (let [mult3 (is-multiple? adder 3)
+            mult5 (is-multiple? adder 5)
+            sumadder (if (or mult3 mult5) adder 0)]
+        (recur (+ sum sumadder) (inc adder)))
+      sum)))
+
+(time (println &amp;amp;quot;Result=&amp;amp;quot; (sum-it-up 1000)))
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;After a few iterations, this was the result. Things I added include:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Use &lt;a href=&quot;http://clojure.github.com/clojure/clojure.core-api.html#clojure.core/loop&quot; target=&quot;_blank&quot;&gt;loop&lt;/a&gt;/&lt;a href=&quot;http://clojure.org/special_forms#recur&quot; target=&quot;_blank&quot;&gt;recur&lt;/a&gt; - this allows me to define a single function versus two (one to recurse and one to setup) and also allows for &lt;a href=&quot;http://en.wikipedia.org/wiki/Tail_call&quot; target=&quot;_blank&quot;&gt;tail call optimization&lt;/a&gt;. Without the use of recur, the JVM would quickly run out of stack space.&lt;/li&gt;
-&lt;li&gt;Removed the specialized is-multiple functions - they were more for experimentation anyways.&lt;/li&gt;
-&lt;li&gt;Added a time function to keep track of optimizations. Something like this is a pain in Java, full of boilerplate.&lt;/li&gt;
+&lt;li&gt;Use &lt;a href=&quot;http://clojure.github.com/clojure/clojure.core-api.html#clojure.core/loop&quot; target=&quot;_blank&quot;&gt;loop&lt;/a&gt;/&lt;a href=&quot;http://clojure.org/special_forms#recur&quot; target=&quot;_blank&quot;&gt;recur&lt;/a&gt; - this allows me to define a single function versus two (one to recurse and one to setup) and also allows for &lt;a href=&quot;http://en.wikipedia.org/wiki/Tail_call&quot; target=&quot;_blank&quot;&gt;tail call optimization&lt;/a&gt;. Without the use of recur, the JVM would quickly run out of stack space.&lt;/li&gt;&lt;/li&gt;
+&lt;li&gt;Removed the specialized is-multiple functions - they were more for experimentation anyways.&lt;/li&gt;&lt;/li&gt;
+&lt;li&gt;Added a time function to keep track of optimizations. Something like this is a pain in Java, full of boilerplate.&lt;/li&gt;&lt;/li&gt;
 &lt;/ul&gt;
-However, this solution has a few things that I don&apos;t like: it still requires iterating over all numbers 1 to max, the conditional for multiples looks &quot;wonky&quot; (that&apos;s an official term by the way) and out of place, and it&apos;s still &lt;i&gt;long&lt;/i&gt;. There has to be a cleaner way.
+&lt;p&gt;However, this solution has a few things that I don&apos;t like: it still requires iterating over all numbers 1 to max, the conditional for multiples looks &amp;quot;wonky&amp;quot; (that&apos;s an official term by the way) and out of place, and it&apos;s still &lt;i&gt;long&lt;/i&gt;. There has to be a cleaner way.&lt;/p&gt;
 &lt;p&gt;Clojure has the ability to generate &lt;a href=&quot;http://clojure.org/sequences&quot; target=&quot;_blank&quot;&gt;lazy sequences&lt;/a&gt; - you define the sequences via functions and the values are generated only when retrieved. If I can create a sequence consisting of all multiples of 3 and 5 from 1 to max, I could do a simple call to sum them all. After playing around with the different sequence functions available, I came up with the following:&lt;/p&gt;
-&lt;p&gt;[code language=&amp;quot;clojure&amp;quot;]
-(defn is-multiple? [x y] (zero? (mod x y)))
+&lt;pre&gt;&lt;code&gt;(defn is-multiple? [x y] (zero? (mod x y)))
 (defn sum-it-up [max]
-(reduce + (filter #(or (is-multiple? % 3) (is-multiple? % 5)) (range (inc max)))))&lt;/p&gt;
-&lt;p&gt;(time (println &amp;quot;Result=&amp;quot; (sum-it-up 1000)))
-[/code]&lt;/p&gt;
-&lt;p&gt;So what does it mean? It&apos;s easiest to read the code from the innermost forms to the outermost. So I&apos;ll start:
-&lt;a href=&quot;range&quot; title=&quot;inc max&quot;&gt;code language=&amp;quot;clojure&amp;quot;&lt;/a&gt;[/code] generates a lazy-sequence from [0-max] (note inclusive). By lazy, it means it&apos;s not actually in memory and will only be created as called. Note that I could have also done the following: [code language=&amp;quot;clojure&amp;quot;](map #(inc %) (range max))[/code] I actually think this makes a little more sense -- it generates 1-max inclusive since we really don&apos;t want 0. However, since 0 doesn&apos;t matter in a summation I went ahead and left it in. Timing showed a difference of 3 ms favoring my chosen implementation.&lt;/p&gt;
-&lt;p&gt;Next up we filter that range to only include our multiples using the following:
-[code language=&amp;quot;clojure&amp;quot;](filter #(or (is-multiple? % 3) (is-multiple? % 5)) RANGE)[/code]
-Note that this also returns a lazy sequence as well. Filter takes two arguments, a predicate function that should return true or false and a collection. In this case, the predicate function is an anonymous function that returns true if the value is a multiple of 3 or 5.&lt;/p&gt;
+  (reduce + (filter #(or (is-multiple? % 3) (is-multiple? % 5)) (range (inc max)))))
+
+(time (println &amp;amp;quot;Result=&amp;amp;quot; (sum-it-up 1000)))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So what does it mean? It&apos;s easiest to read the code from the innermost forms to the outermost. So I&apos;ll start:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(range (inc max))&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;generates a lazy-sequence from [0-max] (note inclusive). By lazy, it means it&apos;s not actually in memory and will only be created as called. Note that I could have also done the following:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(map #(inc %) (range max))&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I actually think this makes a little more sense -- it generates 1-max inclusive since we really don&apos;t want 0. However, since 0 doesn&apos;t matter in a summation I went ahead and left it in. Timing showed a difference of 3 ms favoring my chosen implementation.&lt;/p&gt;
+&lt;p&gt;Next up we filter that range to only include our multiples using the following:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(filter #(or (is-multiple? % 3) (is-multiple? % 5)) RANGE)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Note that this also returns a lazy sequence as well. Filter takes two arguments, a predicate function that should return true or false and a collection. In this case, the predicate function is an anonymous function that returns true if the value is a multiple of 3 or 5.&lt;/p&gt;
 &lt;p&gt;Now that we have a sequence of all numbers [1-max] that are multiples of 3 or 5, it&apos;s time to sum them up. The code
-[code language=&amp;quot;clojure&amp;quot;](reduce + SEQUENCE-OF-MULTIPLES)[/code] is fairly straightforward. It acts like a looping accumulator taking each item off of the sequence and sending it, along with the accumulated value, to the predicate function (plus in this case) and then storing the result into the accumulator. Once all items have been processed, the accumulated result is returned.&lt;/p&gt;</content>
+&lt;code&gt;(reduce + SEQUENCE-OF-MULTIPLES)&lt;/code&gt; is fairly straightforward. It acts like a looping accumulator taking each item off of the sequence and sending it, along with the accumulated value, to the predicate function (plus in this case) and then storing the result into the accumulator. Once all items have been processed, the accumulated result is returned.&lt;/p&gt;</content>
   </entry>
   
   <entry>
