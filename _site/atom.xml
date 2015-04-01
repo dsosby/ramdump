@@ -3,7 +3,7 @@
   <title>Feed Name</title>
   <link href="http://domain/"/>
   <link type="application/atom+xml" rel="self" href="http://domain/atom.xml"/>
-  <updated>2015-03-31T23:11:21.9642415-07:00</updated>
+  <updated>2015-03-31T23:14:16.6572334-07:00</updated>
   <id>http://domain/</id>
   <author>
     <name>Author</name>
@@ -39,7 +39,7 @@ Chicken Scheme has an extension system which packages and distributes &quot;&lt;
     &lt;li&gt;See which egg is failing, then find it in the egg index and look through it&apos;s notes which &lt;em&gt;usually&lt;/em&gt; indicate dependencies&lt;/li&gt;
     &lt;li&gt;Read the error message and decipher from there.&lt;/li&gt;
 &lt;/ul&gt;
-For example, my first attempt at installing the couchdb egg failed due to missing openssl header files. The install utility was attempting to compile the openssl egg, which was a dependency of the http-client egg, which is a dependency of the couchdb egg.
+&lt;p&gt;For example, my first attempt at installing the couchdb egg failed due to missing openssl header files. The install utility was attempting to compile the openssl egg, which was a dependency of the http-client egg, which is a dependency of the couchdb egg.&lt;/p&gt;
 &lt;p&gt;A few searches for openssl and I satisfied the dependency with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get install libssl-dev
 &lt;/code&gt;&lt;/pre&gt;

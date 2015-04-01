@@ -32,6 +32,7 @@ The one I hit with couchdb in particular was openssl. These system lib dependenc
 	<li>See which egg is failing, then find it in the egg index and look through it's notes which <em>usually</em> indicate dependencies</li>
 	<li>Read the error message and decipher from there.</li>
 </ul>
+
 For example, my first attempt at installing the couchdb egg failed due to missing openssl header files. The install utility was attempting to compile the openssl egg, which was a dependency of the http-client egg, which is a dependency of the couchdb egg.
 
 A few searches for openssl and I satisfied the dependency with the following command:
