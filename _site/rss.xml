@@ -6,8 +6,8 @@
     <atom:link href="http://domain/rss.xml" rel="self" type="application/rss+xml" />
     <description></description>
     <language>en-au</language>
-    <pubDate>Tue, 31 Mar 2015 23:14:16 %z</pubDate>
-    <lastBuildDate>Tue, 31 Mar 2015 23:14:16 %z</lastBuildDate>
+    <pubDate>Tue, 31 Mar 2015 23:18:11 %z</pubDate>
+    <lastBuildDate>Tue, 31 Mar 2015 23:18:11 %z</lastBuildDate>
     
     <item>
       <title>Chicken Scheme and CouchDB</title>
@@ -179,12 +179,12 @@ error-background = #293134
 &lt;li&gt;It &lt;strong&gt;runs on the JVM&lt;/strong&gt;, which &lt;i&gt;should&lt;/i&gt; mean that I can tie it in to my everyday work, and if I get really stuck provide a mechanism for me to code in something more familiar.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;It&apos;s new&lt;/strong&gt;, which satisfies my desire for shiny things.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;So with that, the best way to learn a language is to try it out, and &lt;a href=&quot;http://projecteuler.net/&quot; target=&quot;_blank&quot;&gt;Project Euler&lt;/a&gt; provides many fun challenges to get you going. &lt;a href=&quot;http://projecteuler.net/index.php?section=problems&amp;amp;id=1&quot; target=&quot;_blank&quot;&gt;Problem 1&lt;/a&gt; is summarized as such: &amp;quot;Find the sum of all the multiples of 3 or 5 below 1000.&amp;quot; Remember, I&apos;m new to Clojure and &lt;a href=&quot;http://en.wikipedia.org/wiki/Functional_programming&quot; target=&quot;_blank&quot;&gt;functional programming&lt;/a&gt; in general, so if you see issues, feel free to comment.&lt;/p&gt;
+&lt;p&gt;So with that, the best way to learn a language is to try it out, and &lt;a href=&quot;http://projecteuler.net/&quot; target=&quot;_blank&quot;&gt;Project Euler&lt;/a&gt; provides many fun challenges to get you going. &lt;a href=&quot;http://projecteuler.net/index.php?section=problems&amp;id=1&quot; target=&quot;_blank&quot;&gt;Problem 1&lt;/a&gt; is summarized as such: &amp;quot;Find the sum of all the multiples of 3 or 5 below 1000.&amp;quot; Remember, I&apos;m new to Clojure and &lt;a href=&quot;http://en.wikipedia.org/wiki/Functional_programming&quot; target=&quot;_blank&quot;&gt;functional programming&lt;/a&gt; in general, so if you see issues, feel free to comment.&lt;/p&gt;
 &lt;p&gt;The first thing that crosses my mind is how I would do this in procedural languages. First, the naive approach in Java&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;public int sumOfMultiples(int[] multiples, int max)  {
     int sum = 0;
-    for ( int i=1 ; i&amp;amp;lt;1000 ; i++ )  {
-        for ( int j=0 ; j&amp;amp;lt;multiples.length ; j++ )  {
+    for ( int i=1 ; i```1000 ; i++ )  {
+        for ( int j=0 ; j```multiples.length ; j++ )  {
             if ( i % multiples[j] == 0 )  {
                 sum++;
                 break;   //don&apos;t sum the same multiple twice
@@ -196,7 +196,7 @@ error-background = #293134
 }
 
 public void printTest()  {
-    System.out.println(&amp;amp;quot;Result = &amp;amp;quot; + sumOfMultiples([3,5], 1000));
+    System.out.println(&amp;quot;Result = &amp;quot; + sumOfMultiples([3,5], 1000));
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Like I said, this is a naive approach and has several issues that I will cover later in the post. But as a first shot, I try porting the idea to Clojure.&lt;/p&gt;
@@ -210,7 +210,7 @@ public void printTest()  {
 (defn multiple5? [x] (is-multiple x 5))
 
 (defn sum-it-up [sum adder max]
-  (if (&amp;amp;lt; adder max)
+  (if (``` adder max)
     (let [sumadder (if (multiple3? adder) adder (if (multiple5? adder) adder 0))]
       (sum-it-up (+ sum sumadder) (inc adder) max))
     sum))
@@ -218,7 +218,7 @@ public void printTest()  {
 (defn do-summation [max]
   (sum-it-up 0 1 max))
 
-(println &amp;amp;quot;Result=&amp;amp;quot; (do-summation 1000))
+(println &amp;quot;Result=&amp;quot; (do-summation 1000))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The idea here is the same as the procedural style: loop through numbers 1-1000, and if the number is a multiple of 3 or 5, add it up. Since I don&apos;t want an external state to manipulate throughout the loop, I use recursion and keep track of the state within the function itself. This is the code the got me the correct answer first, so I kept refactoring it as I read more about Clojure.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;(defn is-multiple? [x y]
@@ -227,14 +227,14 @@ public void printTest()  {
 (defn sum-it-up
   [max]
   (loop [sum 0 adder 1]
-    (if (&amp;amp;lt; adder max)
+    (if (``` adder max)
       (let [mult3 (is-multiple? adder 3)
             mult5 (is-multiple? adder 5)
             sumadder (if (or mult3 mult5) adder 0)]
         (recur (+ sum sumadder) (inc adder)))
       sum)))
 
-(time (println &amp;amp;quot;Result=&amp;amp;quot; (sum-it-up 1000)))
+(time (println &amp;quot;Result=&amp;quot; (sum-it-up 1000)))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;After a few iterations, this was the result. Things I added include:&lt;/p&gt;
 &lt;ul&gt;
@@ -248,7 +248,7 @@ public void printTest()  {
 (defn sum-it-up [max]
   (reduce + (filter #(or (is-multiple? % 3) (is-multiple? % 5)) (range (inc max)))))
 
-(time (println &amp;amp;quot;Result=&amp;amp;quot; (sum-it-up 1000)))
+(time (println &amp;quot;Result=&amp;quot; (sum-it-up 1000)))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;So what does it mean? It&apos;s easiest to read the code from the innermost forms to the outermost. So I&apos;ll start:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;(range (inc max))&lt;/code&gt;&lt;/p&gt;
@@ -268,122 +268,116 @@ public void printTest()  {
       <pubDate>Fri, 24 Jun 2011 00:00:00 %z</pubDate>
       <author>Author</author>
       <guid>http://domain/Coding/2011/06/24/on-descriptive-conditionals.html</guid>
-      <description>&lt;p&gt;[sourcecode language=&amp;quot;java&amp;quot;]
-if ( ((x &amp;gt; y) || (y == z)) &amp;amp;&amp;amp; isSomethingTrue() )  {
-//Do Something
-}
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;OK, what just happened there? This type of conditional can be painful to read and debug. Is there a better way?&lt;/p&gt;
-&lt;p&gt;[sourcecode language=&amp;quot;java&amp;quot;]
-boolean isXBigEnough = x &amp;gt; y;
-boolean isYValid     = y == z;
-boolean isInCorrectState = isXBigEnough || isYValid;&lt;/p&gt;
-&lt;p&gt;if ( isInCorrectState &amp;amp;&amp;amp; isSomethingTrue() )  {
-//Do Something
-}
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Pulling anonymous conditionals out into named variables can make reading and debugging code much easier. You can come back to this code a year later and know exactly what it was attempting to do based on the names of the variables. Walking through with a debugger is a piece of cake; we can see exactly which conditional was true or false at runtime without having to perform the checks manually. The second format also allows us to easily modify the conditional values via the debugger to change the execution path at run-time - something difficult to accomplish otherwise. But as with anything in coding, there are tradeoffs. In this particular case, we have a performance hit, and a pretty large one at that.&lt;/p&gt;
-&lt;p&gt;I&apos;ve taken the following Java code and examined the bytecode produced to get a better idea of what is happening. First up is the straight conditional.&lt;/p&gt;
-&lt;p&gt;[sourcecode language=&amp;quot;java&amp;quot;]
-private boolean methodOne(int a, int b, int c, int d)  {
-if ( a &amp;lt; b &amp;amp;&amp;amp; b &amp;lt; c &amp;amp;&amp;amp; c &amp;lt; d )  {
-return true;
-} else {
-return false;
-}
-}
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;On compilation, this will produce the following bytecode
-[sourcecode]
-private boolean methodOne(int, int, int, int);
-Code:
-0:   iload_1
-1:   iload_2
-2:   if_icmpge   18
-5:   iload_2
-6:   iload_3
-7:   if_icmpge   18
-10:  iload_3
-11:  iload   4
-13:  if_icmpge   18
-16:  iconst_1
-17:  ireturn
-18:  iconst_0
-19:  ireturn
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Reading this, you can see that the compiler takes advantage of &lt;a href=&quot;http://en.wikipedia.org/wiki/Short-circuit_evaluation&quot; title=&quot;short-circuit evaluation&quot; target=&quot;_blank&quot;&gt;short-circuit evaluation&lt;/a&gt;. At first, only the first two arguments are loaded and compared. If the comparison is true, it goes to the return statement. If it&apos;s false, the next two arguments are loaded and evaluated, and so on.&lt;/p&gt;
-&lt;p&gt;Now let&apos;s compare to the documented version:&lt;/p&gt;
-&lt;p&gt;[sourcecode language=&amp;quot;java&amp;quot;]
-private boolean methodTwo(int a, int b, int c, int d)  {
-boolean first  = a &amp;lt; b;
-boolean second = b &amp;lt; c;
-boolean third  = c &amp;lt; d;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if ( first &amp;amp;&amp;amp; second &amp;amp;&amp;amp; third )  {
-    return true;
-} else {
-    return false;
+      <description>&lt;pre&gt;&lt;code&gt;if ( ((x &amp;gt; y) || (y == z)) &amp;amp;&amp;amp; isSomethingTrue() )  {
+    //Do Something
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;}
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Here, we have separated the conditionals out and described what they actually mean. This is a very simple example, and arguably useless in the real world, but the idea is the same. Below is the bytecode produced:&lt;/p&gt;
-&lt;p&gt;[sourcecode]
-private boolean methodTwo(int, int, int, int);
-Code:
-0:   iload_1
-1:   iload_2
-2:   if_icmpge   9
-5:   iconst_1
-6:   goto    10
-9:   iconst_0
-10:  istore  5
-12:  iload_2
-13:  iload_3
-14:  if_icmpge   21
-17:  iconst_1
-18:  goto    22
-21:  iconst_0
-22:  istore  6
-24:  iload_3
-25:  iload   4
-27:  if_icmpge   34
-30:  iconst_1
-31:  goto    35
-34:  iconst_0
-35:  istore  7
-37:  iload   5
-39:  ifeq    54
-42:  iload   6
-44:  ifeq    54
-47:  iload   7
-49:  ifeq    54
-52:  iconst_1
-53:  ireturn
-54:  iconst_0
-55:  ireturn
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;The code is now noticeably longer. Breaking it down, you can see that 0-10 stores the &lt;code&gt;first&lt;/code&gt; boolean&apos;s conditional result. 12-22 store&apos;s &lt;code&gt;second&lt;/code&gt; and 24-35 stores &lt;code&gt;third&lt;/code&gt;. Now to the important conditional, 37-55. This looks almost exactly like &lt;code&gt;methodOne&lt;/code&gt;&apos;s bytecode but it only loads a single value versus two values in &lt;code&gt;methodOne&lt;/code&gt;. It still provides for short-circuit evaluation of the final conditional.&lt;/p&gt;
-&lt;p&gt;The issues should be obvious at this point. &lt;code&gt;methodTwo&lt;/code&gt; must perform all of the conditional checks, whereas &lt;code&gt;methodOne&lt;/code&gt; takes advantage of short-circuit evaluation to only perform work as necessary. We must also store an additional value during runtime for each conditional, and with that comes the cost of cleaning it up when it goes out of scope.&lt;/p&gt;
-&lt;p&gt;To compare the run-time performance of the two approaches, I benchmarked the simplest cases that do not take advantage of short-circuit evaluation since the short-circuit may or may not run.&lt;/p&gt;
-&lt;p&gt;[sourcecode language=&amp;quot;java&amp;quot;]
-private boolean methodOne(int a, int b)  {
-if ( a &amp;lt; b )  {
-return true;
-} else {
-return false;
-}
-}&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;private boolean methodTwo(int a, int b)  {
-    boolean first  = a &amp;lt; b;
+&lt;p&gt;OK, what just happened there? This type of conditional can be painful to read and debug. Is there a better way?&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;boolean isXBigEnough = x &amp;gt; y;
+boolean isYValid     = y == z;
+boolean isInCorrectState = isXBigEnough || isYValid;
 
-    if ( first )  {
+if ( isInCorrectState &amp;amp;&amp;amp; isSomethingTrue() )  {
+    //Do Something
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pulling anonymous conditionals out into named variables can make reading and debugging code much easier. You can come back to this code a year later and know exactly what it was attempting to do based on the names of the variables. Walking through with a debugger is a piece of cake; we can see exactly which conditional was true or false at runtime without having to perform the checks manually. The second format also allows us to easily modify the conditional values via the debugger to change the execution path at run-time - something difficult to accomplish otherwise. But as with anything in coding, there are tradeoffs. In this particular case, we have a performance hit, and a pretty large one at that.&lt;/p&gt;
+&lt;p&gt;I&apos;ve taken the following Java code and examined the bytecode produced to get a better idea of what is happening. First up is the straight conditional.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private boolean methodOne(int a, int b, int c, int d)  {
+    if ( a &amp;lt; b &amp;amp;&amp;amp; b &amp;lt; c &amp;amp;&amp;amp; c &amp;lt; d )  {
         return true;
     } else {
         return false;
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;[/sourcecode]&lt;/p&gt;
+&lt;p&gt;On compilation, this will produce the following bytecode&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private boolean methodOne(int, int, int, int);
+  Code:
+   0:   iload_1
+   1:   iload_2
+   2:   if_icmpge   18
+   5:   iload_2
+   6:   iload_3
+   7:   if_icmpge   18
+   10:  iload_3
+   11:  iload   4
+   13:  if_icmpge   18
+   16:  iconst_1
+   17:  ireturn
+   18:  iconst_0
+   19:  ireturn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reading this, you can see that the compiler takes advantage of &lt;a href=&quot;http://en.wikipedia.org/wiki/Short-circuit_evaluation&quot; title=&quot;short-circuit evaluation&quot; target=&quot;_blank&quot;&gt;short-circuit evaluation&lt;/a&gt;. At first, only the first two arguments are loaded and compared. If the comparison is true, it goes to the return statement. If it&apos;s false, the next two arguments are loaded and evaluated, and so on.&lt;/p&gt;
+&lt;p&gt;Now let&apos;s compare to the documented version:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private boolean methodTwo(int a, int b, int c, int d)  {
+    boolean first  = a &amp;lt; b;
+    boolean second = b &amp;lt; c;
+    boolean third  = c &amp;lt; d;
+
+    if ( first &amp;amp;&amp;amp; second &amp;amp;&amp;amp; third )  {
+        return true;
+    } else {
+        return false;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here, we have separated the conditionals out and described what they actually mean. This is a very simple example, and arguably useless in the real world, but the idea is the same. Below is the bytecode produced:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private boolean methodTwo(int, int, int, int);
+  Code:
+   0:   iload_1
+   1:   iload_2
+   2:   if_icmpge   9
+   5:   iconst_1
+   6:   goto    10
+   9:   iconst_0
+   10:  istore  5
+   12:  iload_2
+   13:  iload_3
+   14:  if_icmpge   21
+   17:  iconst_1
+   18:  goto    22
+   21:  iconst_0
+   22:  istore  6
+   24:  iload_3
+   25:  iload   4
+   27:  if_icmpge   34
+   30:  iconst_1
+   31:  goto    35
+   34:  iconst_0
+   35:  istore  7
+   37:  iload   5
+   39:  ifeq    54
+   42:  iload   6
+   44:  ifeq    54
+   47:  iload   7
+   49:  ifeq    54
+   52:  iconst_1
+   53:  ireturn
+   54:  iconst_0
+   55:  ireturn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The code is now noticeably longer. Breaking it down, you can see that 0-10 stores the &lt;code&gt;first&lt;/code&gt; boolean&apos;s conditional result. 12-22 store&apos;s &lt;code&gt;second&lt;/code&gt; and 24-35 stores &lt;code&gt;third&lt;/code&gt;. Now to the important conditional, 37-55. This looks almost exactly like &lt;code&gt;methodOne&lt;/code&gt;&apos;s bytecode but it only loads a single value versus two values in &lt;code&gt;methodOne&lt;/code&gt;. It still provides for short-circuit evaluation of the final conditional.&lt;/p&gt;
+&lt;p&gt;The issues should be obvious at this point. &lt;code&gt;methodTwo&lt;/code&gt; must perform all of the conditional checks, whereas &lt;code&gt;methodOne&lt;/code&gt; takes advantage of short-circuit evaluation to only perform work as necessary. We must also store an additional value during runtime for each conditional, and with that comes the cost of cleaning it up when it goes out of scope.&lt;/p&gt;
+&lt;p&gt;To compare the run-time performance of the two approaches, I benchmarked the simplest cases that do not take advantage of short-circuit evaluation since the short-circuit may or may not run.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    private boolean methodOne(int a, int b)  {
+        if ( a &amp;lt; b )  {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean methodTwo(int a, int b)  {
+        boolean first  = a &amp;lt; b;
+    
+        if ( first )  {
+            return true;
+        } else {
+            return false;
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Benchmarking this simple code shows that the mere act of storing a new boolean slows the method down by &lt;b&gt;18%&lt;/b&gt;. With more conditionals and use of short-circuit evaluation, the performance hit will only go up from there.&lt;/p&gt;
 &lt;p&gt;With that said, this is still extremely fast code; on my laptop running each of these methods 10 million times each, &lt;code&gt;methodOne&lt;/code&gt; was only faster than &lt;code&gt;methodTwo&lt;/code&gt; by 14 ms. That&apos;s only a 1.4 nanosecond difference between each method.&lt;/p&gt;
 &lt;p&gt;So the question remains, is descriptively naming your conditionals a worthy practice? The answer will depend on your exact situation. For me, I prefer the more descriptive format that naming conditionals provides, and the debugging aspect really puts it over the top. There have been several times where I was able to effectively identify and resolve buggy code by breaking down large and obscure conditionals into their component parts and labeling them with descriptive variables.&lt;/p&gt;

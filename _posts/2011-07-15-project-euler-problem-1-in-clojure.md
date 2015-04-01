@@ -16,15 +16,15 @@ I've been trying out <a href="http://clojure.org" target="_blank">Clojure</a> la
 <li><strong>It's new</strong>, which satisfies my desire for shiny things.</li>
 </ul>
 
-So with that, the best way to learn a language is to try it out, and <a href="http://projecteuler.net/" target="_blank">Project Euler</a> provides many fun challenges to get you going. <a href="http://projecteuler.net/index.php?section=problems&amp;id=1" target="_blank">Problem 1</a> is summarized as such: "Find the sum of all the multiples of 3 or 5 below 1000." Remember, I'm new to Clojure and <a href="http://en.wikipedia.org/wiki/Functional_programming" target="_blank">functional programming</a> in general, so if you see issues, feel free to comment.
+So with that, the best way to learn a language is to try it out, and <a href="http://projecteuler.net/" target="_blank">Project Euler</a> provides many fun challenges to get you going. <a href="http://projecteuler.net/index.php?section=problems&id=1" target="_blank">Problem 1</a> is summarized as such: "Find the sum of all the multiples of 3 or 5 below 1000." Remember, I'm new to Clojure and <a href="http://en.wikipedia.org/wiki/Functional_programming" target="_blank">functional programming</a> in general, so if you see issues, feel free to comment.
 
 The first thing that crosses my mind is how I would do this in procedural languages. First, the naive approach in Java
 
 ```
 public int sumOfMultiples(int[] multiples, int max)  {
     int sum = 0;
-    for ( int i=1 ; i&lt;1000 ; i++ )  {
-        for ( int j=0 ; j&lt;multiples.length ; j++ )  {
+    for ( int i=1 ; i```1000 ; i++ )  {
+        for ( int j=0 ; j```multiples.length ; j++ )  {
             if ( i % multiples[j] == 0 )  {
                 sum++;
                 break;   //don't sum the same multiple twice
@@ -36,7 +36,7 @@ public int sumOfMultiples(int[] multiples, int max)  {
 }
 
 public void printTest()  {
-	System.out.println(&quot;Result = &quot; + sumOfMultiples([3,5], 1000));
+	System.out.println("Result = " + sumOfMultiples([3,5], 1000));
 }
 ```
 
@@ -53,7 +53,7 @@ Like I said, this is a naive approach and has several issues that I will cover l
 (defn multiple5? [x] (is-multiple x 5))
 
 (defn sum-it-up [sum adder max]
-  (if (&lt; adder max)
+  (if (``` adder max)
 	(let [sumadder (if (multiple3? adder) adder (if (multiple5? adder) adder 0))]
 	  (sum-it-up (+ sum sumadder) (inc adder) max))
 	sum))
@@ -61,7 +61,7 @@ Like I said, this is a naive approach and has several issues that I will cover l
 (defn do-summation [max]
   (sum-it-up 0 1 max))
 
-(println &quot;Result=&quot; (do-summation 1000))
+(println "Result=" (do-summation 1000))
 ```
 
 The idea here is the same as the procedural style: loop through numbers 1-1000, and if the number is a multiple of 3 or 5, add it up. Since I don't want an external state to manipulate throughout the loop, I use recursion and keep track of the state within the function itself. This is the code the got me the correct answer first, so I kept refactoring it as I read more about Clojure.
@@ -73,14 +73,14 @@ The idea here is the same as the procedural style: loop through numbers 1-1000, 
 (defn sum-it-up
   [max]
   (loop [sum 0 adder 1]
-	(if (&lt; adder max)
+	(if (``` adder max)
 	  (let [mult3 (is-multiple? adder 3)
 			mult5 (is-multiple? adder 5)
 			sumadder (if (or mult3 mult5) adder 0)]
 		(recur (+ sum sumadder) (inc adder)))
 	  sum)))
 
-(time (println &quot;Result=&quot; (sum-it-up 1000)))
+(time (println "Result=" (sum-it-up 1000)))
 ```
 
 After a few iterations, this was the result. Things I added include:
@@ -98,7 +98,7 @@ Clojure has the ability to generate <a href="http://clojure.org/sequences" targe
 (defn sum-it-up [max]
   (reduce + (filter #(or (is-multiple? % 3) (is-multiple? % 5)) (range (inc max)))))
 
-(time (println &quot;Result=&quot; (sum-it-up 1000)))
+(time (println "Result=" (sum-it-up 1000)))
 ```
 
 So what does it mean? It's easiest to read the code from the innermost forms to the outermost. So I'll start:

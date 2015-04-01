@@ -10,15 +10,15 @@ tags:
 - conditionals
 ---
 
-[sourcecode language="java"]
+```
 if ( ((x > y) || (y == z)) && isSomethingTrue() )  {
     //Do Something
 }
-[/sourcecode]
+```
 
 OK, what just happened there? This type of conditional can be painful to read and debug. Is there a better way?
 
-[sourcecode language="java"]
+```
 boolean isXBigEnough = x > y;
 boolean isYValid     = y == z;
 boolean isInCorrectState = isXBigEnough || isYValid;
@@ -26,13 +26,13 @@ boolean isInCorrectState = isXBigEnough || isYValid;
 if ( isInCorrectState && isSomethingTrue() )  {
     //Do Something
 }
-[/sourcecode]
+```
 
 Pulling anonymous conditionals out into named variables can make reading and debugging code much easier. You can come back to this code a year later and know exactly what it was attempting to do based on the names of the variables. Walking through with a debugger is a piece of cake; we can see exactly which conditional was true or false at runtime without having to perform the checks manually. The second format also allows us to easily modify the conditional values via the debugger to change the execution path at run-time - something difficult to accomplish otherwise. But as with anything in coding, there are tradeoffs. In this particular case, we have a performance hit, and a pretty large one at that.
 
 I've taken the following Java code and examined the bytecode produced to get a better idea of what is happening. First up is the straight conditional.
 
-[sourcecode language="java"]
+```
 private boolean methodOne(int a, int b, int c, int d)  {
     if ( a < b && b < c && c < d )  {
         return true;
@@ -40,10 +40,10 @@ private boolean methodOne(int a, int b, int c, int d)  {
         return false;
     }
 }
-[/sourcecode]
+```
 
 On compilation, this will produce the following bytecode
-[sourcecode]
+```
 private boolean methodOne(int, int, int, int);
   Code:
    0:	iload_1
@@ -59,13 +59,13 @@ private boolean methodOne(int, int, int, int);
    17:	ireturn
    18:	iconst_0
    19:	ireturn
-[/sourcecode]
+```
 
 Reading this, you can see that the compiler takes advantage of <a href="http://en.wikipedia.org/wiki/Short-circuit_evaluation" title="short-circuit evaluation" target="_blank">short-circuit evaluation</a>. At first, only the first two arguments are loaded and compared. If the comparison is true, it goes to the return statement. If it's false, the next two arguments are loaded and evaluated, and so on.
 
 Now let's compare to the documented version:
 
-[sourcecode language="java"]
+```
 private boolean methodTwo(int a, int b, int c, int d)  {
     boolean first  = a < b;
     boolean second = b < c;
@@ -77,11 +77,11 @@ private boolean methodTwo(int a, int b, int c, int d)  {
         return false;
     }
 }
-[/sourcecode]
+```
 
 Here, we have separated the conditionals out and described what they actually mean. This is a very simple example, and arguably useless in the real world, but the idea is the same. Below is the bytecode produced:
 
-[sourcecode]
+```
 private boolean methodTwo(int, int, int, int);
   Code:
    0:	iload_1
@@ -115,7 +115,7 @@ private boolean methodTwo(int, int, int, int);
    53:	ireturn
    54:	iconst_0
    55:	ireturn
-[/sourcecode]
+```
 
 The code is now noticeably longer. Breaking it down, you can see that 0-10 stores the <code>first</code> boolean's conditional result. 12-22 store's <code>second</code> and 24-35 stores <code>third</code>. Now to the important conditional, 37-55. This looks almost exactly like <code>methodOne</code>'s bytecode but it only loads a single value versus two values in <code>methodOne</code>. It still provides for short-circuit evaluation of the final conditional.
 
@@ -123,7 +123,7 @@ The issues should be obvious at this point. <code>methodTwo</code> must perform 
 
 To compare the run-time performance of the two approaches, I benchmarked the simplest cases that do not take advantage of short-circuit evaluation since the short-circuit may or may not run.
 
-[sourcecode language="java"]
+```
     private boolean methodOne(int a, int b)  {
         if ( a < b )  {
             return true;
@@ -141,7 +141,7 @@ To compare the run-time performance of the two approaches, I benchmarked the sim
             return false;
         }
     }
-[/sourcecode]
+```
 
 Benchmarking this simple code shows that the mere act of storing a new boolean slows the method down by <b>18%</b>. With more conditionals and use of short-circuit evaluation, the performance hit will only go up from there.
 
