@@ -3,7 +3,7 @@
   <title>Feed Name</title>
   <link href="http://domain/"/>
   <link type="application/atom+xml" rel="self" href="http://domain/atom.xml"/>
-  <updated>2015-03-31T22:29:08.4913351-07:00</updated>
+  <updated>2015-03-31T22:33:06.2589347-07:00</updated>
   <id>http://domain/</id>
   <author>
     <name>Author</name>
@@ -157,7 +157,7 @@ Keep probing the environment to see what is not as is expected.</content>
     </author>
     <content type="html">&lt;p&gt;I attempt to use dark backgrounds in all of my editors. I find it much &lt;a href=&quot;http://www.thebestpageintheuniverse.net/c.cgi?u=faq&quot;&gt;easier on my eyes&lt;/a&gt; when I&apos;m staring at code all day long or hacking on something early in the morning. I generally use something close to my favorite color scheme on Notepad++, Obsidian, which I  believe is based on Obsidian Coast in KDE.&lt;/p&gt;
 &lt;p&gt;With that said, Python&apos;s IDLE application is harshly bright compared to my normal editors. After a quick Google search I found only a few themes available for IDLE, so I created IDLE highlighting settings that mimic my favorite color scheme. Here is the first draft for all to enjoy. You can also find the latest updates in &lt;a href=&quot;https://gist.github.com/1122904&quot;&gt;this&lt;/a&gt; Gist repo. Installation is easy: just copy and paste these settings into your .idlerc\config-highlight.cfg file in your home directory (creating as necessary), then choose it in your Highlighting settings in IDLE by selecting &amp;quot;Use Custom Theme&amp;quot; and &amp;quot;Obsidian&amp;quot; from the dropdown.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://ramdump.files.wordpress.com/2011/08/idle_obsidian.png&quot;&gt;&lt;img src=&quot;{{ site-url }}/img/idle_obsidian.png&quot; alt=&quot;Screenshot of Obsidian for IDLE&quot; title=&quot;IDLE Obsidian&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://ramdump.files.wordpress.com/2011/08/idle_obsidian.png&quot;&gt;&lt;img src=&quot;/img/idle_obsidian.png&quot; alt=&quot;Screenshot of Obsidian for IDLE&quot; title=&quot;IDLE Obsidian&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;The Code&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;definition-foreground = #678CB1
 error-foreground = #FF0000
