@@ -6,8 +6,8 @@
     <atom:link href="http://domain/rss.xml" rel="self" type="application/rss+xml" />
     <description></description>
     <language>en-au</language>
-    <pubDate>Thu, 02 Apr 2015 09:35:53 %z</pubDate>
-    <lastBuildDate>Thu, 02 Apr 2015 09:35:53 %z</lastBuildDate>
+    <pubDate>Thu, 02 Apr 2015 09:37:30 %z</pubDate>
+    <lastBuildDate>Thu, 02 Apr 2015 09:37:30 %z</lastBuildDate>
     
     <item>
       <title>Chicken Scheme and CouchDB</title>
