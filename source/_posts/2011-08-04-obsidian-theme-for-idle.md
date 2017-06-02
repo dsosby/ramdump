@@ -11,7 +11,7 @@ I attempt to use dark backgrounds in all of my editors. I find it much [easier o
 
 With that said, Python's IDLE application is harshly bright compared to my normal editors. After a quick Google search I found only a few themes available for IDLE, so I created IDLE highlighting settings that mimic my favorite color scheme. Here is the first draft for all to enjoy. You can also find the latest updates in [this](https://gist.github.com/1122904) Gist repo. Installation is easy: just copy and paste these settings into your .idlerc\config-highlight.cfg file in your home directory (creating as necessary), then choose it in your Highlighting settings in IDLE by selecting "Use Custom Theme" and "Obsidian" from the dropdown.
 
-[<img src="/img/idle_obsidian.png" alt="Screenshot of Obsidian for IDLE" title="IDLE Obsidian">](http://ramdump.files.wordpress.com/2011/08/idle_obsidian.png)
+[<img src="/images/idle_obsidian.png" alt="Screenshot of Obsidian for IDLE" title="IDLE Obsidian">](http://ramdump.files.wordpress.com/2011/08/idle_obsidian.png)
 
 ### The Code
 	definition-foreground = #678CB1
